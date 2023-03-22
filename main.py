@@ -6,7 +6,6 @@ import random
 # 0: land | 1: sand | 2: water
 COLORS = {0: '#1b9908', 1: '#c2b280', 2: '#1c4894'}
 OFFS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
-# OFFS = [(0, -1), (-1, 0), (1, 0), (0, 1)]
 N, M = 50, 50
 W, H = 500, 500
 ADJ_DIC = {0: [0, 1], 1: [0, 1, 2], 2: [1, 2]}
@@ -28,7 +27,6 @@ def buildImg(grid):
     main_img.show()
 
 def BFS(grid, r, c, collapsed):
-    # POSSIBLE =   {0: [0, 1], 1: [0, 1, 2], 2: [1, 2]}
     q = queue.Queue()
     q.put((r, c))
 
@@ -61,9 +59,7 @@ def BFS(grid, r, c, collapsed):
 
 def getRandomState(grid, r, c, collapsed):
     # Get random choice but with priority based on the neighbors
-    cnt = {}
-    for i in range(len(TOTAL)):
-        cnt[i] = 0
+    cnt = {i: 0 for i in range(len(TOTAL))}
 
     for x, y in OFFS:
         new_r, new_c = r + y, c + x

@@ -1,0 +1,7 @@
+Sample 1, 2, 3 - default
+
+Sample 4 - ADJ_DIC = {0: [0, 1], 1: [0, 1, 2], 2: [2]}
+
+Sample vide 1 - ADJ_DIC = {0: [0], 1: [0, 1, 2], 2: [2], 3: [0, 3]}
+                TOTAL = {0, 1, 2, 3}
+                INI_STATE = [0, 1, 2, 3]
