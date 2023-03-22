@@ -8,16 +8,18 @@ COLORS = {0: '#1b9908', 1: '#c2b280', 2: '#1c4894'}
 OFFS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
 # OFFS = [(0, -1), (-1, 0), (1, 0), (0, 1)]
 N, M = 50, 50
+W, H = 500, 500
 ADJ_DIC = {0: [0, 1], 1: [0, 1, 2], 2: [1, 2]}
 TOTAL = {0, 1, 2}
+INI_STATE = [0, 1, 2]
 
-def buildImg(grid, w, h):
-    main_img = Image.new('RGB', size=(w, h), color=(0, 0, 0))
-    sub_img_w, sub_img_h = int(w / M), int(h / N)
+def buildImg(grid):
+    main_img = Image.new('RGB', size=(W, H), color=(0, 0, 0))
+    sub_img_w, sub_img_h = int(W / M), int(H / N)
     
     for r in range(N):
         for c in range(M):
-            x, y = int(c * (w / M)), int(r * (h / N))
+            x, y = int(c * (W / M)), int(r * (H / N))
             color = COLORS[grid[r][c][0]]
             sub_img = Image.new('RGB', size=(sub_img_w, sub_img_h), color=color)
             main_img.paste(sub_img, box=(x, y))
@@ -59,7 +61,10 @@ def BFS(grid, r, c, collapsed):
 
 def getRandomState(grid, r, c, collapsed):
     # Get random choice but with priority based on the neighbors
-    cnt = {0: 0, 1: 0, 2: 0}
+    cnt = {}
+    for i in range(len(TOTAL)):
+        cnt[i] = 0
+
     for x, y in OFFS:
         new_r, new_c = r + y, c + x
         if min(new_r, new_c) >= 0 and new_r < N and new_c < M and collapsed[new_r][new_c]:
@@ -93,11 +98,10 @@ def WFC(grid):
         BFS(grid, r, c, collapsed) # Propagate constraints
 
 def main():
-    ini_state = [0, 1, 2]
-    grid = [[ini_state.copy() for j in range(M)] for i in range(N)]
+    grid = [[INI_STATE.copy() for j in range(M)] for i in range(N)]
     
     WFC(grid)
-    buildImg(grid, 500, 500)
+    buildImg(grid)
 
 if __name__ == "__main__":
     main()
